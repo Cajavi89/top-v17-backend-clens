@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const reviews = [
   {
@@ -141,17 +142,37 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// GET /
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
+// DB connection
+const URI = "";
+mongoose
+  .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("DB connection successful!");
+  })
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
+  });
+
+const NoteSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    important: Boolean,
+    date: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Note = mongoose.model("Note", NoteSchema);
+
 
 // POST
-const generateId = (route) => {
-  const maxId = route.length > 0 ? Math.max(...route.map((n) => n.id)) : 0;
-  return maxId + 1;
-};
-
+// POST /api/reviews
 app.post("/api/reviews", (request, response) => {
   const review = request.body;
   if (!review.title) {
@@ -160,28 +181,57 @@ app.post("/api/reviews", (request, response) => {
   response.status(201).json({ ...review, id: generateId(reviews) });
 });
 
-app.post("/api/services", (request, response) => {
+app.post("/api/reviews", async (request, response) => {
+  const body = request.body;
+  if (!body.content) {
+    return response.status(400).json({ error: "content missing" });
+  }
+  try {
+    const newNote = new Note({
+      content: request.body.content,
+      important: request.body.important,
+      date: new Date().toIS0String(),
+    });
+
+    const savedNote = await newNote.save();
+
+    return response.status(201).json(savedNote);
+  } catch (error) {
+    console.log(error.message);
+    return response.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/services
+/* app.post("/api/services", (request, response) => {
   const service = request.body;
   if (!service.title) {
     return response.status(400).json({ error: "content missing" });
   }
   response.status(201).json({ ...service, id: generateId(services) });
-});
-
-app.post("/api/orders", (request, response) => {
+}); */
+// POST /api/orders
+/* app.post("/api/orders", (request, response) => {
   const order = request.body;
   if (!order.services) {
     return response.status(400).json({ error: "content missing" });
   }
   response.status(201).json({ ...order, id: generateId(orders) });
-});
+}); */
 
 // GET /api/****/:id
 // Get por id
-app.get("/api/reviews", (request, response) => {
-  response.json(reviews);
+app.get("/api/reviews", async (request, response) => {
+  try {
+    const reviews = await Review.find({});
+    return response.json(reviews);
+  } catch (error) {
+    console.log(error.message);
+    return response.status(500).json({ error: error.message });
+  }
 });
-app.get("/api/reviews/:id", (request, response) => {
+
+/* app.get("/api/reviews/:id", (request, response) => {
   const id = Number(request.params.id);
   const review = reviews.find((review) => review.id === id);
   response.json(review);
@@ -211,11 +261,11 @@ app.get("/api/orders/:id", (request, response) => {
     response.status(404).json({ error: `Order with id ${id} not found` });
   }
   response.json(order);
-});
+}); */
 
 // DELETE /api/****/:id
 // Eliminando por id
-app.delete("/api/reviews/:id", (request, response) => {
+/* app.delete("/api/reviews/:id", (request, response) => {
   const id = Number(request.params.id);
   const reviewToRemove = reviews.filter((review) => review.id === id);
   return response.status(204).end();
@@ -231,7 +281,7 @@ app.delete("/api/orders/:id", (request, response) => {
   const id = Number(request.params.id);
   const orderToRemove = orders.filter((order) => order.id === id);
   return response.status(204).end();
-});
+}); */
 
 const PORT = 8080;
 
