@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 
 const reviews = [
   {
@@ -136,6 +137,7 @@ const orders = [
 const app = express();
 
 app.use(express.json());
+app.use(morgan("dev"));
 
 // GET /
 app.get("/", (request, response) => {
@@ -153,7 +155,6 @@ app.post("/api/reviews", (request, response) => {
   if (!review.title) {
     return response.status(400).json({ error: "content missing" });
   }
-  reviews.push({ ...review, id: generateId(reviews) });
   response.status(201).json({ ...review, id: generateId(reviews) });
 });
 
