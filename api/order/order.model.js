@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema(
   {
-    content: {
-      type: String,
-      required: true,
-    },
-    important: Boolean,
-    date: String,
+    precio: Number,
+    service: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service'
+      }
+    ],
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }
   },
   {
     timestamps: true,

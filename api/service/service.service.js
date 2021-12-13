@@ -50,7 +50,7 @@ async function createService(service) {
  */
 async function updateService(id, service) {
   try {
-    const updatedService = await Service.findByIdAndUpdate(id, service);
+    const updatedService = await Service.findOneAndUpdate(id, service);
     return updatedService;
   } catch (error) {
     throw error;
