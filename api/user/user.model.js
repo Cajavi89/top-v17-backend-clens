@@ -14,19 +14,18 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       minlength: 5,
       lowercase: true,
-      validate: {
-        validator: async function (value) {
-          const user = await this.findOne({ email: value });
-          return user === null;
-        },
-        message: 'Email already in use',
-      },
     },
     password: {
       type: String,
       required: true,
       minlength: 5,
     },
+    orderd: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+      }
+    ]
   },
   {
     timestamps: true,

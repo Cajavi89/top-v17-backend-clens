@@ -38,7 +38,7 @@ async function createUser(user) {
     const newUser = new User(user);
     const savedUser = await newUser.save();
     return savedUser;
-  } catch (err) {
+  } catch (error) {
     throw error;
   }
 }
@@ -54,7 +54,7 @@ async function updateUser(id, user) {
   try {
     const updatedUser = await User.findByIdAndUpdate(id, user);
     return updatedUser;
-  } catch (err) {
+  } catch (error) {
     throw error;
   }
 }

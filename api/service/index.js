@@ -13,7 +13,7 @@ const router = Router();
 router.get('/', getAllServicesHandler);
 router.post('/', createServiceHandler);
 router.get('/:id', getServiceByIdHandler);
-router.delete('/:id', updateServiceHandler);
-router.patch('/:id', deleteServiceHandler);
+router.patch('/update/:id', updateServiceHandler);
+router.delete('/delete/:id', deleteServiceHandler);
 
 module.exports = router;

@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 
 const ServiceSchema = new mongoose.Schema(
   {
-    content: {
+    name: {
       type: String,
+      unique: true,
       required: true,
+      minLength: 2
     },
-    important: Boolean,
-    date: String,
+    precio: {
+      type: Number,
+      required: true,
+      minLength: 2
+    }
   },
   {
     timestamps: true,
