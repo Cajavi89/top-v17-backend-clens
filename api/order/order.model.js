@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema(
   {
-    precio: Number,
+    precio: {
+      type: Number,
+      required: true
+    },
     service: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,8 +15,13 @@ const OrderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
+    },
+    userName: {
+      type: String,
+      ref: 'User',
       required: true
-    }
+    },
   },
   {
     timestamps: true,

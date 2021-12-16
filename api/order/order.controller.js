@@ -4,6 +4,7 @@ const {
   getAllOrders,
   getOrderById,
   updateOrder,
+  getNoteByUser,
 } = require('./order.service');
 
 async function getAllOrdersHandler(req, res) {
@@ -21,9 +22,7 @@ async function getOrderByIdHandler(req, res) {
     const order = await getOrderById(id);
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ message: `Order not found with id: ${id}` });
+      return res.status(404).json({ message: `Order not found with id: ${id}` });
     }
 
     return res.status(200).json(order);
@@ -33,8 +32,15 @@ async function getOrderByIdHandler(req, res) {
 }
 
 async function createOrderHandler(req, res) {
+  const { user } = req;
+
   try {
-    const order = await createOrder(req.body);
+    const newOrder = {
+      ...req.body,
+      userId: user._id,
+      userName: `${user.firstName} ${user.lastName}`
+    };
+    const order = await createOrder(newOrder);
     return res.status(201).json(order);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -47,9 +53,7 @@ async function updateOrderHandler(req, res) {
     const order = await updateOrder(id, req.body);
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ message: `Order not found with id: ${id}` });
+      return res.status(404).json({ message: `Order not found with id: ${id}` });
     }
 
     return res.status(200).json(order);
@@ -64,12 +68,20 @@ async function deleteOrderHandler(req, res) {
     const order = await deleteOrder(id);
 
     if (!order) {
-      return res
-        .status(404)
-        .json({ message: `Order not found with id: ${id}` });
+      return res.status(404).json({ message: `Order not found with id: ${id}` });
     }
 
     return res.status(200).json(order);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+async function getOrderByUserHandler(req, res) {
+  const { userId } = req.params;
+  try {
+    const orders = await getNoteByUser(userId);
+    return res.status(200).json(orders);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -81,4 +93,5 @@ module.exports = {
   getAllOrdersHandler,
   getOrderByIdHandler,
   updateOrderHandler,
+  getOrderByUserHandler,
 };

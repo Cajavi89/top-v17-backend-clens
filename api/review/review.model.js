@@ -2,12 +2,27 @@ const mongoose = require('mongoose');
 
 const ReviewSchema = new mongoose.Schema(
   {
-    content: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
-    important: Boolean,
-    date: String,
+    userName: {
+      type: String,
+      ref: 'User',
+      required: true
+    },
+    userPhoto: {
+      type: String,
+      ref: 'User',
+      required: true
+    },
+    comentario: {
+      type: String,
+      required: true,
+      minLength: 10,
+      trim: true,
+    }
   },
   {
     timestamps: true,
