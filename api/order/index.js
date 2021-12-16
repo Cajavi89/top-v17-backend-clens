@@ -6,14 +6,19 @@ const {
   getAllOrdersHandler,
   getOrderByIdHandler,
   updateOrderHandler,
+  getOrderByUserHandler,
 } = require('./order.controller');
 
+const { isAuthenticated, hasRole } = require('../../auth/auth.service');
 const router = Router();
 
-router.get('/', getAllOrdersHandler);
-router.post('/', createOrderHandler);
-router.get('/:id', getOrderByIdHandler);
-router.delete('/:id', updateOrderHandler);
-router.patch('/:id', deleteOrderHandler);
+router.get('/', isAuthenticated(), getAllOrdersHandler);
+router.get('/:id', isAuthenticated(), getOrderByIdHandler);
+router.get('/user/:userId', isAuthenticated(), getOrderByUserHandler);
+router.post('/', hasRole(['admin', 'usuario', 'personal']), createOrderHandler);
+router.patch('/:id', hasRole(['admin', 'usuario', 'personal']), updateOrderHandler);
+router.delete('/:id', hasRole(['admin', 'usuario', 'personal']), deleteOrderHandler);
 
 module.exports = router;
+
+// hasRole('admin'),

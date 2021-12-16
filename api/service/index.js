@@ -8,12 +8,13 @@ const {
   updateServiceHandler,
 } = require('./service.controller');
 
+const { isAuthenticated, hasRole } = require('../../auth/auth.service');
 const router = Router();
 
 router.get('/', getAllServicesHandler);
-router.post('/', createServiceHandler);
 router.get('/:id', getServiceByIdHandler);
-router.patch('/update/:id', updateServiceHandler);
-router.delete('/delete/:id', deleteServiceHandler);
+router.post('/', hasRole('admin'), createServiceHandler);
+router.patch('/:id', hasRole('admin'), updateServiceHandler);
+router.delete('/:id', hasRole('admin'), deleteServiceHandler);
 
 module.exports = router;

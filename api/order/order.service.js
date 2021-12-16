@@ -5,12 +5,8 @@ const Order = require('./order.model');
  * @returns all orders
  */
 async function getAllOrders() {
-  try {
-    const orders = await Order.find();
-    return orders;
-  } catch (error) {
-    throw error;
-  }
+  const orders = await Order.find();
+  return orders;
 }
 
 /**
@@ -19,12 +15,8 @@ async function getAllOrders() {
  * @returns order
  */
 async function getOrderById(id) {
-  try {
-    const order = await Order.findById(id);
-    return order;
-  } catch (error) {
-    throw error;
-  }
+  const order = await Order.findById(id);
+  return order;
 }
 
 /**
@@ -33,13 +25,9 @@ async function getOrderById(id) {
  * @returns Order created
  */
 async function createOrder(order) {
-  try {
-    const newOrder = new Order(order);
-    const savedOrder = await newOrder.save();
-    return savedOrder;
-  } catch (error) {
-    throw error;
-  }
+  const newOrder = new Order(order);
+  const savedOrder = await newOrder.save();
+  return savedOrder;
 }
 
 /**
@@ -49,12 +37,8 @@ async function createOrder(order) {
  * @returns order updated
  */
 async function updateOrder(id, order) {
-  try {
-    const updatedOrder = await Order.findByIdAndUpdate(id, order);
-    return updatedOrder;
-  } catch (error) {
-    throw error;
-  }
+  const updatedOrder = await Order.findByIdAndUpdate(id, order);
+  return updatedOrder;
 }
 
 /**
@@ -63,12 +47,13 @@ async function updateOrder(id, order) {
  * @returns Order deleted
  */
 async function deleteOrder(id) {
-  try {
-    const deletedOrder = await Order.findByIdAndDelete(id);
-    return deletedOrder;
-  } catch (error) {
-    throw error;
-  }
+  const deletedOrder = await Order.findByIdAndDelete(id);
+  return deletedOrder
+}
+
+async function getOrderByUser(userId) {
+  const notes = await Note.find({ userId });
+  return notes;
 }
 
 module.exports = {
@@ -77,4 +62,5 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrder,
+  getOrderByUser,
 };

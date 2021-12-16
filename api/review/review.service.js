@@ -5,12 +5,8 @@ const Review = require('./review.model');
  * @returns all reviews
  */
 async function getAllReviews() {
-  try {
-    const reviews = await Review.find();
-    return reviews;
-  } catch (error) {
-    throw error;
-  }
+  const reviews = await Review.find();
+  return reviews;
 }
 
 /**
@@ -19,12 +15,8 @@ async function getAllReviews() {
  * @returns review
  */
 async function getReviewById(id) {
-  try {
-    const review = await Review.findById(id);
-    return review;
-  } catch (error) {
-    throw error;
-  }
+  const review = await Review.findById(id);
+  return review;
 }
 
 /**
@@ -33,13 +25,9 @@ async function getReviewById(id) {
  * @returns Review created
  */
 async function createReview(review) {
-  try {
-    const newReview = new Review(review);
-    const savedReview = await newReview.save();
-    return savedReview;
-  } catch (error) {
-    throw error;
-  }
+  const newReview = new Review(review);
+  const savedReview = await newReview.save();
+  return savedReview;
 }
 
 /**
@@ -49,12 +37,8 @@ async function createReview(review) {
  * @returns review updated
  */
 async function updateReview(id, review) {
-  try {
-    const updatedReview = await Review.findByIdAndUpdate(id, review);
-    return updatedReview;
-  } catch (error) {
-    throw error;
-  }
+  const updatedReview = await Review.findByIdAndUpdate(id, review);
+  return updatedReview;
 }
 
 /**
@@ -63,12 +47,8 @@ async function updateReview(id, review) {
  * @returns Review deleted
  */
 async function deleteReview(id) {
-  try {
-    const deletedReview = await Review.findByIdAndDelete(id);
-    return deletedReview;
-  } catch (error) {
-    throw error;
-  }
+  const deletedReview = await Review.findByIdAndDelete(id);
+  return deletedReview;
 }
 
 module.exports = {

@@ -5,12 +5,8 @@ const User = require('./user.model');
  * @returns all users
  */
 async function getAllUsers() {
-  try {
-    const users = await User.find();
-    return users;
-  } catch (error) {
-    throw error;
-  }
+  const users = await User.find();
+  return users;
 }
 
 /**
@@ -19,12 +15,8 @@ async function getAllUsers() {
  * @returns user
  */
 async function getUserById(id) {
-  try {
-    const user = await User.findById(id);
-    return user;
-  } catch (error) {
-    throw error;
-  }
+  const user = await User.findById(id);
+  return user;
 }
 
 /**
@@ -34,13 +26,8 @@ async function getUserById(id) {
  */
 
 async function createUser(user) {
-  try {
-    const newUser = new User(user);
-    const savedUser = await newUser.save();
-    return savedUser;
-  } catch (error) {
-    throw error;
-  }
+  const newUser = await User.create(user);
+  return newUser;
 }
 
 /**
@@ -51,25 +38,28 @@ async function createUser(user) {
  */
 
 async function updateUser(id, user) {
-  try {
-    const updatedUser = await User.findByIdAndUpdate(id, user);
-    return updatedUser;
-  } catch (error) {
-    throw error;
-  }
+  const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+  return updatedUser;
 }
+
 /**
  * Delete a user
  * @param {String} id Identifier of the user to be deleted
  * @returns User deleted
  */
 async function deleteUser(id) {
-  try {
-    const deletedUser = await User.findByIdAndDelete(id);
-    return deletedUser;
-  } catch (error) {
-    throw error;
-  }
+  const deletedUser = await User.findByIdAndDelete(id);
+  return deletedUser;
+}
+
+async function getUserByEmail(email) {
+  const user = await User.findOne({ email });
+  return user;
+}
+
+async function findOneUser(query) {
+  const user = await User.findOne(query);
+  return user;
 }
 
 module.exports = {
@@ -78,4 +68,6 @@ module.exports = {
   getAllUsers,
   getUserById,
   updateUser,
+  getUserByEmail,
+  findOneUser
 };
