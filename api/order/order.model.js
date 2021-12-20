@@ -8,8 +8,13 @@ const OrderSchema = new mongoose.Schema(
     },
     service: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Service'
+        _id: mongoose.Schema.Types.ObjectId,
+        precio: Number,
+        name: String,
+        cantidad: {
+          type: Number,
+          required: true
+        }
       }
     ],
     userId: {

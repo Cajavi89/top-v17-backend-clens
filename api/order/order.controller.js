@@ -33,6 +33,7 @@ async function getOrderByIdHandler(req, res) {
 
 async function createOrderHandler(req, res) {
   const { user } = req;
+  console.log(user);
 
   try {
     const newOrder = {
