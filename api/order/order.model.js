@@ -4,7 +4,7 @@ const OrderSchema = new mongoose.Schema(
   {
     precio: {
       type: Number,
-      required: true
+      required: true,
     },
     service: [
       {
@@ -13,9 +13,9 @@ const OrderSchema = new mongoose.Schema(
         name: String,
         cantidad: {
           type: Number,
-          required: true
-        }
-      }
+          required: true,
+        },
+      },
     ],
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -25,7 +25,76 @@ const OrderSchema = new mongoose.Schema(
     userName: {
       type: String,
       ref: 'User',
-      required: true
+      required: true,
+    },
+    horasPorServicio: {
+      type: Number,
+      required: true,
+    },
+    incluirProductos: {
+      type: String,
+      required: true,
+    },
+    distrito: {
+      type: String,
+      uppercase: true,
+      required: true,
+    },
+    comentarioIngresoAlLugar: {
+      type: String,
+      uppercase: true,
+      required: true,
+    },
+    ingresoAlLugar: {
+      type: String,
+      uppercase: true,
+      required: true,
+    },
+    fecha: {
+      day: {
+        type: String,
+        required: true,
+      },
+      dayNumber: {
+        type: Number,
+        required: true,
+      },
+      month: {
+        type: String,
+        required: true,
+      },
+    },
+    horaLlegada: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      required: true,
+    },
+    nombre: {
+      type: String,
+      uppercase: true,
+      required: true,
+    },
+    telefono: {
+      type: Number,
+      required: true,
+    },
+    direccion: {
+      type: String,
+      uppercase: true,
+      required: true,
+    },
+    comentariosDeDireccion: {
+      type: String,
+      uppercase: true,
+    },
+    ciudad: {
+      type: String,
+      uppercase: true,
+      required: true,
     },
   },
   {
