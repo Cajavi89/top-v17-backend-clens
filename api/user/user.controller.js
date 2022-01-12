@@ -4,6 +4,7 @@ const {
   getAllUsers,
   getUserById,
   updateUser,
+  getUserByEmail,
 } = require('./user.service');
 
 const { log } = require('../../utils/logger');
@@ -24,6 +25,20 @@ async function getUserByIdHandler(req, res) {
     const user = await getUserById(id);
     if (!user) {
       return res.status(404).json({ message: `User not found with id: ${id}` });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    log.error(error);
+    return res.status(400).json({ error: error.message });
+  }
+}
+
+async function getUserByEmailHandler(req, res) {
+  const { email } = req.params;
+  try {
+    const user = await getUserByEmail(email);
+    if (!user) {
+      return res.status(404).json({ message: `User not found with email: ${email}` });
     }
     return res.status(200).json(user);
   } catch (error) {
@@ -80,4 +95,5 @@ module.exports = {
   getAllUsersHandler,
   getUserByIdHandler,
   updateUserHandler,
+  getUserByEmailHandler,
 };
