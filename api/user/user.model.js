@@ -31,7 +31,6 @@ const UserSchema = new mongoose.Schema(
     direccion: {
       type: String,
       uppercase: true,
-      required: true,
       trim: true,
     },
     identificacion: {
