@@ -8,7 +8,7 @@ const all = {
 
   expiresIn: '2h',
 
-  // Should we populate the DB with sample data?
+  // Should we populate the DB with sample data?s
   seedDB: process.env.NODE_ENV !== 'production',
 
   // Secret for session, you will want to change this and make it an environment variable
