@@ -89,7 +89,7 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 // Virtuals
 UserSchema.virtual('profile').get(function () {
   const { firstName, lastName, email, role, direccion, identificacion, telefono, id} = this;
-  return { fullname: `${firstName} ${lastName}`, role, email, direccion, identificacion, telefono, id, userName: `${firstName.split(' ')[0]} ${firstName.split(' ')[0]}`};
+  return { fullname: `${firstName} ${lastName}`, role, email, direccion, identificacion, telefono, id, userName: `${firstName.split(' ')[0]} ${lastName.split(' ')[0]}`};
 });
 
 module.exports = mongoose.model('User', UserSchema);
