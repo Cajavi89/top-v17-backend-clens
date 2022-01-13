@@ -32,16 +32,8 @@ async function getOrderByIdHandler(req, res) {
 }
 
 async function createOrderHandler(req, res) {
-  const { user } = req;
-  console.log(user);
-
   try {
-    const newOrder = {
-      ...req.body,
-      userId: user._id,
-      userName: `${user.firstName} ${user.lastName}`
-    };
-    const order = await createOrder(newOrder);
+    const order = await createOrder(req.body);
     return res.status(201).json(order);
   } catch (error) {
     return res.status(500).json({ error: error.message });
