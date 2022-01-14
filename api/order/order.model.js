@@ -95,6 +95,10 @@ const OrderSchema = new mongoose.Schema(
       uppercase: true,
       required: true,
     },
+    completed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
