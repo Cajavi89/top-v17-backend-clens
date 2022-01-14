@@ -52,8 +52,8 @@ async function deleteOrder(id) {
 }
 
 async function getOrderByUser(userId) {
-  const notes = await Note.find({ userId });
-  return notes;
+  const order = await Order.find({ userId });
+  return order;
 }
 
 module.exports = {

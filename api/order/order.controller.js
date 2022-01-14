@@ -74,6 +74,9 @@ async function getOrderByUserHandler(req, res) {
   const { userId } = req.params;
   try {
     const orders = await getNoteByUser(userId);
+    if (!orders) {
+      return res.status(404).json({ message: `Order not found with id: ${id}` });
+    }
     return res.status(200).json(orders);
   } catch (error) {
     return res.status(500).json({ error: error.message });
