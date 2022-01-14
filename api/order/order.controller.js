@@ -4,7 +4,7 @@ const {
   getAllOrders,
   getOrderById,
   updateOrder,
-  getNoteByUser,
+  getOrderByUser,
 } = require('./order.service');
 
 async function getAllOrdersHandler(req, res) {
@@ -73,7 +73,7 @@ async function deleteOrderHandler(req, res) {
 async function getOrderByUserHandler(req, res) {
   const { userId } = req.params;
   try {
-    const orders = await getNoteByUser(userId);
+    const orders = await getOrderByUser(userId);
     if (!orders) {
       return res.status(404).json({ message: `Order not found with id: ${id}` });
     }
