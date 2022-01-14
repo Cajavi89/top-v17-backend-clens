@@ -43,7 +43,6 @@ const OrderSchema = new mongoose.Schema(
     comentarioIngresoAlLugar: {
       type: String,
       uppercase: true,
-      required: true,
     },
     ingresoAlLugar: {
       type: String,
@@ -95,6 +94,10 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       uppercase: true,
       required: true,
+    },
+    completed: {
+      type: Boolean,
+      default: false,
     },
   },
   {
