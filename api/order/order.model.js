@@ -62,6 +62,10 @@ const OrderSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
+      date: {
+        type: String,
+        required: true,
+      },
     },
     horaLlegada: {
       type: String,
@@ -96,6 +100,10 @@ const OrderSchema = new mongoose.Schema(
       required: true,
     },
     completed: {
+      type: Boolean,
+      default: false,
+    },
+    reviewed: {
       type: Boolean,
       default: false,
     },
