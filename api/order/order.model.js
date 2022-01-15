@@ -99,6 +99,10 @@ const OrderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    reviewed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
