@@ -6,11 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DB_URI=mongodb://localhost:27017/mongodevDb jest --forceExit"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "superagent": "^7.0.2",
+    "supertest": "^6.2.1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
