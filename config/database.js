@@ -4,7 +4,7 @@ const URI = process.env.DB_URI;
 
 async function connectDB() {
   try {
-    await mongoose.connect(URI, {
+    await mongoose.connect(URI || 'mongodb://localhost:27017/mongodevDb', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
