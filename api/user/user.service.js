@@ -43,11 +43,14 @@ async function updateUser(id, user) {
   return updatedUser;
 }
 
-async function updateBillingCards(user, card) {
+async function addBillingCards(user, card) {
   const creditCards = get(user, 'billing.creditCards', []);
+  const customerId = get(user, 'billing.customerId', '')
+
   const customer = {
     billing: {
       creditCards: creditCards.concat(card),
+      customerId
     },
   };
 
@@ -55,6 +58,23 @@ async function updateBillingCards(user, card) {
     new: true,
   });
   return updatedUser;
+}
+
+async function addBilingCustomerId(user, customerId) {
+  const creditCards = get(user, 'billing.creditCards', [])
+
+  const customer = {
+    billing: {
+      creditCards,
+      customerId
+    }
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, customer, {
+    new: true,
+  });
+
+  return updatedUser
 }
 
 /**
@@ -85,5 +105,6 @@ module.exports = {
   updateUser,
   getUserByEmail,
   findOneUser,
-  updateBillingCards
+  addBillingCards,
+  addBilingCustomerId
 };
