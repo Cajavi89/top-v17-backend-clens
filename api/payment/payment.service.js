@@ -6,13 +6,8 @@ const epayco = require('epayco-sdk-node')({
   test: true
 })
 
-async function createToken(req, res) {
-  try {
-    const data = await epayco.token.create(req.body)
-    return res.status(200).json(data)
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
+async function createCardToken(data) {
+  return await epayco.token.create(data)
 }
 
 async function createCustomerInfo(req, res) {
@@ -43,7 +38,7 @@ async function getAllCustomers(req, res) {
 }
 
 module.exports = {
-  createToken,
+  createCardToken,
   createCustomerInfo,
   createPaymentInfo,
   getAllCustomers,

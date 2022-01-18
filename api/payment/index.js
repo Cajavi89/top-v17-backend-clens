@@ -1,11 +1,9 @@
 const {
-  createToken,
-  createCustomerInfo,
-  createPaymentInfo,
-  getAllCustomers,
-} = require('./epayco.service');
-
+  createCardTokenHandlers,
+} = require('./payment.controller');
 const { Router } = require('express');
+const { isAuthenticated } = require('../../auth/auth.service');
+
 const router = Router();
 
 const credit_info = {
@@ -14,6 +12,7 @@ const credit_info = {
   "card[exp_month]": "12",
   "card[cvc]": "123"
 }
+
 const payment_info = {
   token_card: "1e5fa14ab47ff5c4c08c304",
   customer_id: "1e5fdff678e422d496f0e02",
@@ -56,10 +55,10 @@ var customer_info = {
   cell_phone: "3010000001"
 }
 
-router.post('/token', createToken)
-router.post('/customer', createCustomerInfo)
-router.post('/payment', createPaymentInfo)
-router.get('/customer-list', getAllCustomers)
+router.post('/card-token', isAuthenticated(), createCardTokenHandlers)
+// router.post('/customer', createCustomerInfo)
+// router.post('/payment', createPaymentInfo)
+// router.get('/customer-list', getAllCustomers)
 
 
 module.exports = router

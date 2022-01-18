@@ -1,3 +1,4 @@
+const get = require('lodash/get');
 const User = require('./user.model');
 
 /**
@@ -42,6 +43,20 @@ async function updateUser(id, user) {
   return updatedUser;
 }
 
+async function updateBillingCards(user, card) {
+  const creditCards = get(user, 'billing.creditCards', []);
+  const customer = {
+    billing: {
+      creditCards: creditCards.concat(card),
+    },
+  };
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, customer, {
+    new: true,
+  });
+  return updatedUser;
+}
+
 /**
  * Delete a user
  * @param {String} id Identifier of the user to be deleted
@@ -69,5 +84,6 @@ module.exports = {
   getUserById,
   updateUser,
   getUserByEmail,
-  findOneUser
+  findOneUser,
+  updateBillingCards
 };
