@@ -1,6 +1,7 @@
+require('dotenv').config();
 const epayco = require('epayco-sdk-node')({
-  apiKey: '89b5cf91ba82e6891f1c327153c41a88',
-  privateKey: 'd11301174ccc50e6bb5885bba45ba760',
+  apiKey:  process.env.E_PublicKey,
+  privateKey: process.env.E_PrivateKey,
   lang: 'ES',
   test: true
 })
