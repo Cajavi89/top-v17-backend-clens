@@ -6,6 +6,7 @@ const order = require('./api/order');
 const review = require('./api/review');
 const authLocal = require('./auth/local');
 const payment = require('./api/payment');
+const upload = require('./api/upload');
 
 // defining routes
 function routes(app) {
@@ -15,6 +16,7 @@ function routes(app) {
   app.use('/api/orders', order);
   app.use('/api/reviews', review);
   app.use('/api/payments', payment);
+  app.use('/api/uploads', upload);
 
   // auth routes
   app.use('/auth/local', authLocal);
