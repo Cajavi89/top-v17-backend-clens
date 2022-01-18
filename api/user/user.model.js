@@ -2,6 +2,45 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../../config');
 
+const CreditCardSchema = new mongoose.Schema(
+  {
+    expMonth: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    expYear: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    mask: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    tokenId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false },
+);
+
+const BillingSchema = new mongoose.Schema(
+  {
+    creditCards: [CreditCardSchema],
+    customerId: String,
+  },
+  { _id: false },
+);
+
 const UserSchema = new mongoose.Schema(
   {
     email: {
@@ -64,6 +103,7 @@ const UserSchema = new mongoose.Schema(
     },
     passwordResetToken: String,
     passwordResetExpires: Date,
+    billing: BillingSchema,
   },
   {
     timestamps: true,
