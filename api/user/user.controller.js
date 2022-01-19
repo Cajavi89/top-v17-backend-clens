@@ -9,6 +9,8 @@ const {
 
 const {verifyAccountEmail} = require('../../utils/email.js')
 
+const { signToken } = require('../../auth/auth.service');
+
 const { log } = require('../../utils/logger');
 
 async function getAllUsersHandler(req, res) {
@@ -68,8 +70,9 @@ async function updateUserHandler(req, res) {
     if (!user) {
       return res.status(404).json({ message: `User not found with id: ${id}` });
     }
+    const token = signToken(user.profile);
 
-    return res.status(200).json(user);
+    return res.status(200).json({ token });
   } catch (error) {
     log.error(error);
     return res.status(500).json({ error: error.message });
