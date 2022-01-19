@@ -1,4 +1,3 @@
-require('dotenv').config();
 const nodemailer = require("nodemailer");
 const {templateVerifyEmail} = require('./templateVerifyEmail.js')
 
@@ -30,4 +29,7 @@ async function verifyAccountEmail(data) {
   console.log('data del EMAILER:',templateVerifyEmail(data));
 }
 
-module.exports = {verifyAccountEmail};
+module.exports = {
+  verifyAccountEmail
+  };
+  
