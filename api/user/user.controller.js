@@ -7,6 +7,8 @@ const {
   getUserByEmail,
 } = require('./user.service');
 
+const {verifyAccountEmail} = require('../../utils/email.js')
+
 const { log } = require('../../utils/logger');
 
 async function getAllUsersHandler(req, res) {
@@ -50,6 +52,7 @@ async function getUserByEmailHandler(req, res) {
 async function createUserHandler(req, res) {
   try {
     const user = await createUser(req.body);
+    await verifyAccountEmail(user)//envia el correo de verificacion
     return res.status(201).json(user.profile);
   } catch (error) {
     log.error(error);
