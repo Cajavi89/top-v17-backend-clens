@@ -1,4 +1,4 @@
-function templateVerifyEmail(user, urlConfirm) {
+function templateVerifyEmailToResetPassword(user, urlConfirm) {
   const template = `<td class="esd-stripe" align="center">
     <table class="es-content-body" style="background-color: transparent;" width="600" cellspacing="0" cellpadding="0" bgcolor="transparent" align="center">
         <tbody>
@@ -186,5 +186,5 @@ return template
 }
 
 module.exports = {
-  templateVerifyEmail
+  templateVerifyEmailToResetPassword
 }

@@ -59,8 +59,52 @@ async function changePasswordHandler(req, res) {
   }
 }
 
+async function validateEmaildHandler(req, res) {
+  const { email } = req.params;
+  try {
+    const user = await findOneUser({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: 'User not found',
+      });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({
+        message: 'User is already verified',
+      });
+    }
+
+    const updatedUser = await updateUser(user.id, { isVerified: true });
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function resetPasswordHandler(req, res) {
+  const { email } = req.body;
+  try {
+    const user = await findOneUser({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        message: 'User not found',
+      });
+    }
+    await verifyEmailToResetPassword(user);
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
 
 module.exports = {
   loginUserHandler,
   changePasswordHandler,
+  validateEmaildHandler,
+  resetPasswordHandler
 };

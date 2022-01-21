@@ -7,7 +7,7 @@ const {
   getUserByEmail,
 } = require('./user.service');
 
-const {verifyAccountEmail} = require('../../utils/email.js')
+const { verifyAccountEmail } = require('../../utils/email.js');
 
 const { signToken } = require('../../auth/auth.service');
 
@@ -42,7 +42,9 @@ async function getUserByEmailHandler(req, res) {
   try {
     const user = await getUserByEmail(email);
     if (!user) {
-      return res.status(404).json({ message: `User not found with email: ${email}` });
+      return res
+        .status(404)
+        .json({ message: `User not found with email: ${email}` });
     }
     return res.status(200).json(user);
   } catch (error) {
@@ -54,7 +56,7 @@ async function getUserByEmailHandler(req, res) {
 async function createUserHandler(req, res) {
   try {
     const user = await createUser(req.body);
-    await verifyAccountEmail(user)//envia el correo de verificacion
+    await verifyAccountEmail(user); //envia el correo de verificacion
     return res.status(201).json(user.profile);
   } catch (error) {
     log.error(error);

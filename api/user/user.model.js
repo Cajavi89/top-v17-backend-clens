@@ -101,6 +101,10 @@ const UserSchema = new mongoose.Schema(
       url: String,
       secure_url: String,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     passwordResetToken: String,
     passwordResetExpires: Date,
     billing: BillingSchema,
