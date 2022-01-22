@@ -15,6 +15,6 @@ const router = Router();
 router.post('/login', loginUserHandler);
 router.post('/reset-password', resetPasswordHandler);
 router.post('/change-password', changePasswordHandler);
-router.post('/validate-email/:email', validateEmaildHandler);
+router.post('/validate-email/:userToken', validateEmaildHandler);
 
 module.exports = router;

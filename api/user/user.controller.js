@@ -66,6 +66,7 @@ async function sendEmailToUserByEmailHandler(req, res) {
     const token = signToken(user.profile)
 
     await verifyEmailToResetPassword(user, token);
+
     return res.status(200).json(user);
   } catch (error) {
     log.error(error);
@@ -76,7 +77,11 @@ async function sendEmailToUserByEmailHandler(req, res) {
 async function createUserHandler(req, res) {
   try {
     const user = await createUser(req.body);
-    await verifyAccountEmail(user);
+
+    const token = signToken(user.profile)
+
+    await verifyAccountEmail(user, token);
+
     return res.status(201).json(user.profile);
   } catch (error) {
     log.error(error);

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const { templateVerifyEmail } = require('./templateVerifyEmail.js')
 const { templateVerifyEmailToResetPassword } = require('./templateVerifyEmailToResetPassword.js')
 
-async function verifyAccountEmail(user) {
+async function verifyAccountEmail(user, token) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -19,7 +19,7 @@ async function verifyAccountEmail(user) {
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
-  const urlConfirm = `https://clens.netlify.app/validation-email/${user.email}`
+  const urlConfirm = `https://clens.netlify.app/validation-email/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address
@@ -34,7 +34,7 @@ async function verifyAccountEmail(user) {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>;
 }
 
-async function verifyEmailToResetPassword(user) {
+async function verifyEmailToResetPassword(user, token) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
@@ -51,7 +51,7 @@ async function verifyEmailToResetPassword(user) {
   /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
   /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
-  const urlConfirm = `https://clens.netlify.app/reset-password/${user.email}`
+  const urlConfirm = `https://clens.netlify.app/reset-password/${token}`
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address

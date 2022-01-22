@@ -92,4 +92,5 @@ module.exports = {
   signToken,
   isAuthenticated,
   hasRole,
+  validateToken,
 };
