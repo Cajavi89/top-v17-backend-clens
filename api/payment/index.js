@@ -13,5 +13,4 @@ router.post('/customer', isAuthenticated(), createCustomerHandlers)
 router.post('/make-payment', isAuthenticated(), makePaymentHandlers)
 // router.get('/customer-list', getAllCustomers)
 
-
 module.exports = router

@@ -5,12 +5,8 @@ const Service = require('./service.model');
  * @returns all services
  */
 async function getAllServices() {
-  try {
-    const services = await Service.find();
-    return services;
-  } catch (error) {
-    throw error;
-  }
+  const services = await Service.find();
+  return services;
 }
 
 /**
@@ -19,12 +15,8 @@ async function getAllServices() {
  * @returns service
  */
 async function getServiceById(id) {
-  try {
-    const service = await Service.findById(id);
-    return service;
-  } catch (error) {
-    throw error;
-  }
+  const service = await Service.findById(id);
+  return service;
 }
 
 /**
@@ -33,13 +25,9 @@ async function getServiceById(id) {
  * @returns Service created
  */
 async function createService(service) {
-  try {
-    const newService = new Service(service);
-    const savedService = await newService.save();
-    return savedService;
-  } catch (error) {
-    throw error;
-  }
+  const newService = new Service(service);
+  const savedService = await newService.save();
+  return savedService;
 }
 
 /**
@@ -49,12 +37,8 @@ async function createService(service) {
  * @returns service updated
  */
 async function updateService(id, service) {
-  try {
-    const updatedService = await Service.findOneAndUpdate(id, service);
-    return updatedService;
-  } catch (error) {
-    throw error;
-  }
+  const updatedService = await Service.findOneAndUpdate(id, service);
+  return updatedService;
 }
 
 /**
@@ -63,12 +47,8 @@ async function updateService(id, service) {
  * @returns Service deleted
  */
 async function deleteService(id) {
-  try {
-    const deletedService = await Service.findByIdAndDelete(id);
-    return deletedService;
-  } catch (error) {
-    throw error;
-  }
+  const deletedService = await Service.findByIdAndDelete(id);
+  return deletedService;
 }
 
 module.exports = {

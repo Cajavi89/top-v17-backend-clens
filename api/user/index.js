@@ -10,7 +10,7 @@ const {
   sendEmailToUserByEmailHandler,
 } = require('./user.controller');
 
-const { isAuthenticated, hasRole } = require('../../auth/auth.service');
+const { isAuthenticated } = require('../../auth/auth.service');
 const router = Router();
 
 router.get('/', getAllUsersHandler);

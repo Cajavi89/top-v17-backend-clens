@@ -76,7 +76,7 @@ async function sendEmailToUserByEmailHandler(req, res) {
 async function createUserHandler(req, res) {
   try {
     const user = await createUser(req.body);
-    await verifyAccountEmail(user); //envia el correo de verificacion
+    await verifyAccountEmail(user);
     return res.status(201).json(user.profile);
   } catch (error) {
     log.error(error);

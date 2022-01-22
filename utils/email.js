@@ -1,13 +1,13 @@
-const nodemailer = require("nodemailer");
-const {templateVerifyEmail} = require('./templateVerifyEmail.js')
-const {templateVerifyEmailToResetPassword} = require('./templateVerifyEmailToResetPassword.js')
+const nodemailer = require('nodemailer');
+const { templateVerifyEmail } = require('./templateVerifyEmail.js')
+const { templateVerifyEmailToResetPassword } = require('./templateVerifyEmailToResetPassword.js')
 
 async function verifyAccountEmail(user) {
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
@@ -16,16 +16,16 @@ async function verifyAccountEmail(user) {
     },
   });
 
-/*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
-/*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
+  /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
+  /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
   const urlConfirm = `https://clens.netlify.app/validation-email/${user.email}`
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address
     to: user.email, // list of receivers
-    subject: "Correo de Verificacion ✔", // Subject line
-    text: "Texto de confirmacion en formato texto", // plain text body
+    subject: 'Correo de Verificacion ✔', // Subject line
+    text: 'Texto de confirmacion en formato texto', // plain text body
     html: templateVerifyEmail(user, urlConfirm), // html body
   });
 
@@ -39,7 +39,7 @@ async function verifyEmailToResetPassword(user) {
 
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
@@ -48,16 +48,16 @@ async function verifyEmailToResetPassword(user) {
     },
   });
 
-/*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
-/*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
+  /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
+  /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
   const urlConfirm = `https://clens.netlify.app/reset-password/${user.email}`
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address
     to: user.email, // list of receivers
-    subject: "Correo de Cambio de contraseña ✔", // Subject line
-    text: "Texto de confirmacion en formato texto", // plain text body
+    subject: 'Correo de Cambio de contraseña ✔', // Subject line
+    text: 'Texto de confirmacion en formato texto', // plain text body
     html: templateVerifyEmailToResetPassword(user, urlConfirm), // html body
   });
 
@@ -69,4 +69,4 @@ async function verifyEmailToResetPassword(user) {
 module.exports = {
   verifyAccountEmail,
   verifyEmailToResetPassword
-  };
+};

@@ -9,7 +9,7 @@ const {
 } = require('./review.controller');
 
 const router = Router();
-const { isAuthenticated, hasRole } = require('../../auth/auth.service');
+const { /* isAuthenticated */ hasRole } = require('../../auth/auth.service');
 
 router.get('/', getAllReviewsHandler);
 router.get('/:id', getReviewByIdHandler);
