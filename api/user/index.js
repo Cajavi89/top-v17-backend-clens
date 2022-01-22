@@ -7,6 +7,7 @@ const {
   getUserByIdHandler,
   updateUserHandler,
   getUserByEmailHandler,
+  sendEmailToUserByEmailHandler,
 } = require('./user.controller');
 
 const { isAuthenticated, hasRole } = require('../../auth/auth.service');
@@ -16,6 +17,7 @@ router.get('/', getAllUsersHandler);
 router.post('/', createUserHandler);
 router.get('/:id', getUserByIdHandler);
 router.get('/email/:email', isAuthenticated(), getUserByEmailHandler);
+router.post('/email', sendEmailToUserByEmailHandler);
 router.patch('/:id', updateUserHandler);
 router.delete('/:id', deleteUserHandler);
 

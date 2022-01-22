@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const {templateVerifyEmail} = require('./templateVerifyEmail.js')
+const {templateVerifyEmailToResetPassword} = require('./templateVerifyEmailToResetPassword.js')
 
 async function verifyAccountEmail(user) {
   // let testAccount = await nodemailer.createTestAccount();
@@ -18,7 +19,7 @@ async function verifyAccountEmail(user) {
 /*   const token = jwt.sign({ email: user.email}, process.env.TOKEN_SECRET); */
 /*   const urlConfirm = `${process.env.APIGATEWAY_URL}/auth/local/validate-email/${token}` */
 
-  const urlConfirm = `https://clens.netlify.app/validate-email/${user.email}`
+  const urlConfirm = `https://clens.netlify.app/validation-email/${user.email}`
   // send mail with defined transport object
   await transporter.sendMail({
     from: '"Clens - El mejor servicio al mejor precio 👻" <no-reply@clens.com>', // sender address

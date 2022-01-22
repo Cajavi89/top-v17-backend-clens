@@ -10,14 +10,20 @@ async function loginUserHandler(req, res) {
 
     if (!user) {
       return res.status(400).json({
-        message: 'User not found',
+        message: 'Email not found',
+      });
+    }
+
+    if (!user.isVerified) {
+      return res.status(400).json({
+        message: 'Your email is not validated',
       });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({
-        message: 'Invalid password',
+        message: 'Invalid email or password',
       });
     }
 
@@ -85,7 +91,7 @@ async function validateEmaildHandler(req, res) {
 }
 
 async function resetPasswordHandler(req, res) {
-  const { email } = req.body;
+  const { email, password } = req.body;
   try {
     const user = await findOneUser({ email });
 
@@ -94,9 +100,15 @@ async function resetPasswordHandler(req, res) {
         message: 'User not found',
       });
     }
-    await verifyEmailToResetPassword(user);
 
-    res.status(200).json(user);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const updatedUser = await updateUser(user.id, { password: hash });
+
+    const token = signToken(updatedUser.profile);
+
+    res.status(200).json({ token });
   } catch (err) {
     res.status(400).json(err);
   }
