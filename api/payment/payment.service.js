@@ -12,6 +12,27 @@ async function createCardToken(data) {
   return await epayco.token.create(data)
 }
 
+async function getCustomer(customerId) {
+  const customer = await epayco.customers.get(customerId);
+  return customer
+}
+
+async function getAllCustomer() {
+  return await epayco.customers.list()
+}
+
+async function deleteToken(user, card) {
+  const customerId = get(user, 'billing.customerId');
+
+  const delete_customer_info = {
+    franchise : "visa",
+    mask : get(card, 'mask'),
+    customer_id: customerId
+  }
+
+  return epayco.customers.delete(delete_customer_info)
+}
+
 async function createCustomer(user) {
   const customerInfo = {
     token_card: user?.billing?.creditCards?.[0]?.tokenId,
@@ -19,6 +40,8 @@ async function createCustomer(user) {
     last_name: user.lastName,
     email: user.email,
     default: true,
+    address: user.direccion,
+    cell_phone: user.telefono
   };
 
   return epayco.customers.create(customerInfo);
@@ -54,18 +77,11 @@ async function makePayment(user, payment) {
   return await epayco.charge.create(paymentInfo);
 }
 
-async function getAllCustomers(req, res) {
-  try {
-    const data = await epayco.customers.list()
-    return res.status(200).json(data)
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-}
-
 module.exports = {
   createCardToken,
   createCustomer,
   makePayment,
-  getAllCustomers,
+  getAllCustomer,
+  getCustomer,
+  deleteToken
 };

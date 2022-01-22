@@ -1,7 +1,10 @@
 const {
   createCardToken,
   createCustomer,
-  makePayment
+  makePayment,
+  getAllCustomer,
+  getCustomer,
+  deleteToken
 } = require('./payment.service');
 const {
   addBillingCards,
@@ -50,6 +53,7 @@ async function createCustomerHandlers(req, res) {
     const user = req.user;
 
     const { data } = await createCustomer(user)
+
     await addBilingCustomerId(user, data.customerId)
 
     return res.status(200).json(data)
@@ -94,8 +98,48 @@ async function makePaymentHandlers(req, res) {
   }
 }
 
+async function getCustomerHandlers(req, res) {
+  const customerId = req.params;
+  try {
+    const customer = await getCustomer(customerId.id)
+    return res.status(200).json(customer)
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+async function getAllCustomersHandlers(req, res) {
+  try {
+    const data = await getAllCustomer()
+    return res.status(200).json(data)
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+async function deleteTokenHandlers(req, res) {
+  try {
+    const { user, body: card } = req;
+    const { data, success } = await deleteToken(user.billing.customerId, card.mask);
+
+    if (!success) {
+      return res.status(500).send({
+        message: 'Error to delete card token',
+        error: data
+      })
+    }
+
+    return res.status(200).json({success, data})
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createCardTokenHandlers,
   createCustomerHandlers,
   makePaymentHandlers,
+  getAllCustomersHandlers,
+  getCustomerHandlers,
+  deleteTokenHandlers
 };
