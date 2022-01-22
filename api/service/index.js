@@ -8,7 +8,7 @@ const {
   updateServiceHandler,
 } = require('./service.controller');
 
-const { isAuthenticated, hasRole } = require('../../auth/auth.service');
+const { /* isAuthenticated, */ hasRole } = require('../../auth/auth.service');
 const router = Router();
 
 router.get('/', getAllServicesHandler);

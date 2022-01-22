@@ -2,7 +2,7 @@ require('dotenv').config();
 const get = require('lodash/get');
 
 const epayco = require('epayco-sdk-node')({
-  apiKey:  process.env.E_PublicKey,
+  apiKey: process.env.E_PublicKey,
   privateKey: process.env.E_PrivateKey,
   lang: 'ES',
   test: true
