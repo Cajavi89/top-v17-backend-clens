@@ -119,13 +119,12 @@ async function getAllCustomersHandlers(req, res) {
 }
 
 async function deleteTokenHandlers(req, res) {
-
   const { franchise, mask, customerId } = req.body;
 
   const creditInfo = {
-    'franchise': franchise,
-    'mask': mask,
-    'customer_id': customerId,
+    franchise: franchise,
+    mask: mask,
+    customer_id: customerId,
   };
 
   try {
@@ -138,7 +137,7 @@ async function deleteTokenHandlers(req, res) {
       })
     }
 
-    return res.status(200).json({success, data})
+    return res.status(200).json({ success, data })
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

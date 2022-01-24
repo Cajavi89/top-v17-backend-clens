@@ -2,7 +2,7 @@ require('dotenv').config();
 const get = require('lodash/get');
 
 const epayco = require('epayco-sdk-node')({
-  apiKey:  process.env.E_PublicKey,
+  apiKey: process.env.E_PublicKey,
   privateKey: process.env.E_PrivateKey,
   lang: 'ES',
   test: true
@@ -46,8 +46,8 @@ async function makePayment(user, payment) {
   const paymentInfo = {
     token_card: get(payment, 'tokenId', defaultTokenId),
     customer_id: get(payment, 'customerId', customerId),
-    doc_type: "CC",
-    doc_number: "10358519",
+    doc_type: 'CC',
+    doc_number: '10358519',
     name: get(payment, 'firstName', user.firstName),
     last_name: get(payment, 'lastName', user.lastName),
     email: get(payment, 'email', user.email),
@@ -55,14 +55,14 @@ async function makePayment(user, payment) {
     address: get(payment, 'address'),
     phone: get(payment, 'phone'),
     cell_phone: get(payment, 'cellPhone'),
-    bill: "OR-1234",
-    description: "Test Payment 4",
+    bill: 'OR-1234',
+    description: 'Test Payment 4',
     value: get(payment, 'value'),
-    tax: "1600",
-    tax_base: "10000",
-    currency: "COP",
-    dues: "12",
-    ip: "190.000.000.000",
+    tax: '1600',
+    tax_base: '10000',
+    currency: 'COP',
+    dues: '12',
+    ip: '190.000.000.000',
     use_default_card_customer: true,
   };
 

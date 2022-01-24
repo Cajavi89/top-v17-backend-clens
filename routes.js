@@ -8,7 +8,6 @@ const authLocal = require('./auth/local');
 const upload = require('./api/upload');
 const payment = require('./api/payment');
 
-
 // defining routes
 function routes(app) {
   app.use('/api/clens', clens);

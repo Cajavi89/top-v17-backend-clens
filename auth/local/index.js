@@ -3,6 +3,8 @@ const { Router } = require('express');
 const {
   loginUserHandler,
   changePasswordHandler,
+  validateEmaildHandler,
+  resetPasswordHandler,
 } = require('./local.controller');
 
 const router = Router();
@@ -11,8 +13,8 @@ const router = Router();
 // /auth/local/forgot-password
 
 router.post('/login', loginUserHandler);
-// router.post('/forgot-password', (req, res) => {});
+router.post('/reset-password', resetPasswordHandler);
 router.post('/change-password', changePasswordHandler);
-// router.post('/validate-email', (req, res) => {});
+router.post('/validate-email/:userToken', validateEmaildHandler);
 
 module.exports = router;
