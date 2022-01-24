@@ -21,16 +21,8 @@ async function getAllCustomer() {
   return await epayco.customers.list()
 }
 
-async function deleteToken(user, card) {
-  const customerId = get(user, 'billing.customerId');
-
-  const delete_customer_info = {
-    franchise : "visa",
-    mask : get(card, 'mask'),
-    customer_id: customerId
-  }
-
-  return epayco.customers.delete(delete_customer_info)
+async function deleteToken(data) {
+  return epayco.customers.delete(data)
 }
 
 async function createCustomer(user) {
@@ -54,8 +46,8 @@ async function makePayment(user, payment) {
   const paymentInfo = {
     token_card: get(payment, 'tokenId', defaultTokenId),
     customer_id: get(payment, 'customerId', customerId),
-    doc_type: get(payment, 'docType'),
-    doc_number: get(payment, 'docNumber'),
+    doc_type: "CC",
+    doc_number: "10358519",
     name: get(payment, 'firstName', user.firstName),
     last_name: get(payment, 'lastName', user.lastName),
     email: get(payment, 'email', user.email),
@@ -63,14 +55,14 @@ async function makePayment(user, payment) {
     address: get(payment, 'address'),
     phone: get(payment, 'phone'),
     cell_phone: get(payment, 'cellPhone'),
-    bill: get(payment, 'bill'),
-    description: get(payment, 'description'),
+    bill: "OR-1234",
+    description: "Test Payment 4",
     value: get(payment, 'value'),
-    tax: get(payment, 'tax'),
-    tax_base: get(payment, 'taxBase'),
-    currency: get(payment, 'currency'),
-    dues: get(payment, 'dues'),
-    ip: get(payment, 'ip'),
+    tax: "1600",
+    tax_base: "10000",
+    currency: "COP",
+    dues: "12",
+    ip: "190.000.000.000",
     use_default_card_customer: true,
   };
 
