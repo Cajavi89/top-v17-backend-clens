@@ -66,7 +66,7 @@ async function addBilingCustomerId(user, customerId) {
   const customer = {
     billing: {
       creditCards,
-      customerId
+      customerId: customerId
     }
   }
 

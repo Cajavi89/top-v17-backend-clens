@@ -12,6 +12,19 @@ async function createCardToken(data) {
   return await epayco.token.create(data)
 }
 
+async function getCustomer(customerId) {
+  const customer = await epayco.customers.get(customerId);
+  return customer
+}
+
+async function getAllCustomer() {
+  return await epayco.customers.list()
+}
+
+async function deleteToken(data) {
+  return epayco.customers.delete(data)
+}
+
 async function createCustomer(user) {
   const customerInfo = {
     token_card: user?.billing?.creditCards?.[0]?.tokenId,
@@ -19,6 +32,8 @@ async function createCustomer(user) {
     last_name: user.lastName,
     email: user.email,
     default: true,
+    address: user.direccion,
+    cell_phone: user.telefono
   };
 
   return epayco.customers.create(customerInfo);
@@ -31,8 +46,8 @@ async function makePayment(user, payment) {
   const paymentInfo = {
     token_card: get(payment, 'tokenId', defaultTokenId),
     customer_id: get(payment, 'customerId', customerId),
-    doc_type: get(payment, 'docType'),
-    doc_number: get(payment, 'docNumber'),
+    doc_type: 'CC',
+    doc_number: '10358519',
     name: get(payment, 'firstName', user.firstName),
     last_name: get(payment, 'lastName', user.lastName),
     email: get(payment, 'email', user.email),
@@ -40,32 +55,25 @@ async function makePayment(user, payment) {
     address: get(payment, 'address'),
     phone: get(payment, 'phone'),
     cell_phone: get(payment, 'cellPhone'),
-    bill: get(payment, 'bill'),
-    description: get(payment, 'description'),
+    bill: 'OR-1234',
+    description: 'Test Payment 4',
     value: get(payment, 'value'),
-    tax: get(payment, 'tax'),
-    tax_base: get(payment, 'taxBase'),
-    currency: get(payment, 'currency'),
-    dues: get(payment, 'dues'),
-    ip: get(payment, 'ip'),
+    tax: '1600',
+    tax_base: '10000',
+    currency: 'COP',
+    dues: '12',
+    ip: '190.000.000.000',
     use_default_card_customer: true,
   };
 
   return await epayco.charge.create(paymentInfo);
 }
 
-async function getAllCustomers(req, res) {
-  try {
-    const data = await epayco.customers.list()
-    return res.status(200).json(data)
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-}
-
 module.exports = {
   createCardToken,
   createCustomer,
   makePayment,
-  getAllCustomers,
+  getAllCustomer,
+  getCustomer,
+  deleteToken
 };

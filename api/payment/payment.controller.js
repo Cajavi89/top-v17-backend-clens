@@ -1,7 +1,10 @@
 const {
   createCardToken,
   createCustomer,
-  makePayment
+  makePayment,
+  getAllCustomer,
+  getCustomer,
+  deleteToken
 } = require('./payment.service');
 const {
   addBillingCards,
@@ -48,9 +51,11 @@ async function createCardTokenHandlers(req, res) {
 async function createCustomerHandlers(req, res) {
   try {
     const user = req.user;
-
     const { data } = await createCustomer(user)
-    await addBilingCustomerId(user, data.customerId)
+
+    if (user?.billing?.customerId === null || user?.billing.customerId === undefined) {
+      addBilingCustomerId(user, data.customerId)
+    }
 
     return res.status(200).json(data)
   } catch (error) {
@@ -68,6 +73,7 @@ async function makePaymentHandlers(req, res) {
     const { data, success } = await makePayment(user, payment);
 
     if (!success) {
+      // return res.status(500).send(console.log(data))
       return res.status(500).send({
         message: 'Error to make payment',
         error: data
@@ -77,11 +83,10 @@ async function makePaymentHandlers(req, res) {
     await Payment.create({
       userId: user._id,
       refId: data.recibo,
-      bill: payment.bill,
-      description: payment.description,
-      value: payment.value,
-      tax: payment?.tax,
-      taxBase: payment?.taxBase,
+      bill: data.factura,
+      description: data.descripcion,
+      value: data.valor,
+      tax: data.iva,
     });
 
     return res.status(200).json({ success, data });
@@ -94,8 +99,55 @@ async function makePaymentHandlers(req, res) {
   }
 }
 
+async function getCustomerHandlers(req, res) {
+  const customerId = req.params;
+  try {
+    const customer = await getCustomer(customerId.id)
+    return res.status(200).json(customer)
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+async function getAllCustomersHandlers(req, res) {
+  try {
+    const data = await getAllCustomer()
+    return res.status(200).json(data)
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
+async function deleteTokenHandlers(req, res) {
+  const { franchise, mask, customerId } = req.body;
+
+  const creditInfo = {
+    franchise: franchise,
+    mask: mask,
+    customer_id: customerId,
+  };
+
+  try {
+    const { data, success } = await deleteToken(creditInfo);
+
+    if (!success) {
+      return res.status(500).send({
+        message: 'Error to delete card token',
+        error: data
+      })
+    }
+
+    return res.status(200).json({ success, data })
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createCardTokenHandlers,
   createCustomerHandlers,
   makePaymentHandlers,
+  getAllCustomersHandlers,
+  getCustomerHandlers,
+  deleteTokenHandlers
 };
