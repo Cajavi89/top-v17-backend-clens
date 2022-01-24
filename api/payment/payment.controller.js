@@ -53,8 +53,8 @@ async function createCustomerHandlers(req, res) {
     const user = req.user;
     const { data } = await createCustomer(user)
 
-    if (user?.billing?.customerId === null || user?.billing.customerId === undefined) {
-      addBilingCustomerId(user, data.customerId)
+    if (!user?.billing?.customerId) {
+      await addBilingCustomerId(user, data.customerId)
     }
 
     return res.status(200).json(data)
