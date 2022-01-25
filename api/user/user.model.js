@@ -90,10 +90,6 @@ const UserSchema = new mongoose.Schema(
       enum: config.userRoles,
       required: true,
     },
-    active: {
-      type: Boolean,
-      default: false,
-    },
     photo: {
       public_id: String,
       format: String,
