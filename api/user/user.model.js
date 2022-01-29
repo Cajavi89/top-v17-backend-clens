@@ -101,6 +101,19 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    ocuppied: {
+      date: String,
+      hours: String,
+    },
+    disponible: {
+      type: Boolean,
+      default: true,
+    },
+    disponibility: {
+      startDay: Date,
+      finishDay: Date,
+      hours: String,
+    },
     passwordResetToken: String,
     passwordResetExpires: Date,
     billing: BillingSchema,

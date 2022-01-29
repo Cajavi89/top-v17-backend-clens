@@ -5,6 +5,7 @@ const {
   getUserById,
   updateUser,
   getUserByEmail,
+  getUserByRolePersonal,
 } = require('./user.service');
 
 const { verifyAccountEmail } = require('../../utils/email.js');
@@ -122,6 +123,21 @@ async function deleteUserHandler(req, res) {
   }
 }
 
+async function getAllPersonalClensHandler(req, res) {
+  try {
+    const users = await getUserByRolePersonal();
+    if (!users) {
+      return res
+        .status(404)
+        .json({ message: 'Users not found' });
+    }
+    return res.status(200).json(users);
+  } catch (error) {
+    log.error(error);
+    return res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createUserHandler,
   deleteUserHandler,
@@ -130,4 +146,5 @@ module.exports = {
   updateUserHandler,
   getUserByEmailHandler,
   sendEmailToUserByEmailHandler,
+  getAllPersonalClensHandler,
 };

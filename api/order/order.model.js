@@ -22,6 +22,10 @@ const OrderSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    clensId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     userName: {
       type: String,
       ref: 'User',
