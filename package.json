@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "DB_URI=mongodb://localhost:27017 jest --forceExit"
+    "test": "jest --forceExit"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
