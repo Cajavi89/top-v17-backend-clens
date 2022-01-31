@@ -49,8 +49,8 @@ async function createCardTokenHandlers(req, res) {
 }
 
 async function createCustomerHandlers(req, res) {
+  const user = req.user;
   try {
-    const user = req.user;
     const { data } = await createCustomer(user)
 
     if (!user?.billing?.customerId) {
