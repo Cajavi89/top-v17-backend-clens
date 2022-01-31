@@ -91,6 +91,11 @@ async function getUserByEmail(email) {
   return user;
 }
 
+async function getUserByRolePersonal() {
+  const users = await User.find({ role: 'personal' });
+  return users;
+}
+
 async function findOneUser(query) {
   const user = await User.findOne(query);
   return user;
@@ -105,5 +110,6 @@ module.exports = {
   getUserByEmail,
   findOneUser,
   addBillingCards,
-  addBilingCustomerId
+  addBilingCustomerId,
+  getUserByRolePersonal,
 };
