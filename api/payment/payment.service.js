@@ -26,8 +26,10 @@ async function deleteToken(data) {
 }
 
 async function createCustomer(user) {
+  const lastTokenCard = user?.billing?.creditCards.slice(-1)[0]
+
   const customerInfo = {
-    token_card: user?.billing?.creditCards?.[0]?.tokenId,
+    token_card: lastTokenCard.tokenId,
     name: user.firstName,
     last_name: user.lastName,
     email: user.email,
@@ -36,16 +38,36 @@ async function createCustomer(user) {
     cell_phone: user.telefono
   };
 
-  return epayco.customers.create(customerInfo);
+  const customerInfoCreated = {
+    token_card: lastTokenCard.tokenId,
+    customer_id: (user?.billing?.customerId),
+  }
+
+  if (!user?.billing?.customerId) {
+    return epayco.customers.create(customerInfo)
+  }
+
+  if (user?.billing?.customerId) {
+    return epayco.customers.addNewToken(customerInfoCreated)
+  }
 }
 
 async function makePayment(user, payment) {
-  const defaultTokenId = get(user, 'billing.creditCards[0].tokenId');
-  const customerId = get(user, 'billing.customerId');
+  const lastTokenCard = user?.billing?.creditCards.slice(-1)[0];
+  const tokenCardFront = get(payment, 'tokenId')
+
+  let tokenCard
+
+  if (tokenCardFront === '') {
+    tokenCard = lastTokenCard.tokenId
+  }
+  if (tokenCardFront !== '') {
+    tokenCard = tokenCardFront
+  }
 
   const paymentInfo = {
-    token_card: get(payment, 'tokenId', defaultTokenId),
-    customer_id: get(payment, 'customerId', customerId),
+    token_card: tokenCard,
+    customer_id: get(user, 'billing.customerId'),
     doc_type: 'CC',
     doc_number: '10358519',
     name: get(payment, 'firstName', user.firstName),
@@ -56,7 +78,7 @@ async function makePayment(user, payment) {
     phone: get(payment, 'phone'),
     cell_phone: get(payment, 'cellPhone'),
     bill: 'OR-1234',
-    description: 'Test Payment 4',
+    description: 'Clens Payment',
     value: get(payment, 'value'),
     tax: '1600',
     tax_base: '10000',

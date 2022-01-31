@@ -16,6 +16,6 @@ router.post('/customer', isAuthenticated(), createCustomerHandlers)
 router.post('/make-payment', isAuthenticated(), makePaymentHandlers)
 router.get('/customer/:id', getCustomerHandlers)
 router.get('/customer-list', getAllCustomersHandlers)
-router.delete('/delete', isAuthenticated(), deleteTokenHandlers)
+router.delete('/delete', deleteTokenHandlers)
 
 module.exports = router
