@@ -131,7 +131,9 @@ async function getAllPersonalClensHandler(req, res) {
         .status(404)
         .json({ message: 'Users not found' });
     }
-    return res.status(200).json(users);
+    const usersProfile = users.map((user) => { return user.profile })
+    console.log(usersProfile)
+    return res.status(200).json(usersProfile);
   } catch (error) {
     log.error(error);
     return res.status(400).json({ error: error.message });

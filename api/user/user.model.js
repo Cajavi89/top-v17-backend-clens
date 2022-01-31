@@ -110,6 +110,9 @@ const UserSchema = new mongoose.Schema(
       startHour: String,
       finishHour: String,
     },
+    personalEslogan: {
+      type: String,
+    },
     passwordResetToken: String,
     passwordResetExpires: Date,
     billing: BillingSchema,
@@ -143,9 +146,9 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 
 // Virtuals
 UserSchema.virtual('profile').get(function () {
-  const { firstName, lastName, email, role, direccion, identificacion, telefono, id, photo, billing, disponibility, disponible } = this;
+  const { firstName, lastName, email, role, direccion, identificacion, telefono, id, photo, billing, disponibility, disponible, personalEslogan } = this;
   if (role === 'personal') {
-    return { disponibility, disponible, billing, fullname: `${firstName} ${lastName}`, role, email, direccion, identificacion, telefono, photo: { id: photo.public_id, url: photo.url }, id, userName: `${firstName.split(' ')[0]} ${lastName.split(' ')[0]}` }
+    return { personalEslogan, disponibility, disponible, billing, fullname: `${firstName} ${lastName}`, role, email, direccion, identificacion, telefono, photo: { id: photo.public_id, url: photo.url }, id, userName: `${firstName.split(' ')[0]} ${lastName.split(' ')[0]}` }
   }
   return { billing, fullname: `${firstName} ${lastName}`, role, email, direccion, identificacion, telefono, photo: { id: photo.public_id, url: photo.url }, id, userName: `${firstName.split(' ')[0]} ${lastName.split(' ')[0]}` };
 });
