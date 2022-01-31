@@ -8,16 +8,9 @@ const epayco = require('epayco-sdk-node')({
 })
 const app = require('./app');
 
-describe('/api/clens', () => {
-  test('GET responds with success code', async () => {
-    const response = await request(app).get('/api/clens');
-    expect(response.statusCode).toBe(200);
-  });
-});
-
-describe('GET /privateRoute', () => {
-  test('gives true if not authenticated/ authorized', async () => {
-    const response = await request(app).get('/api/users/email/test@mail');
-    expect(response.unauthorized).toBe(true);
-  });
-});
+test('testing home page', () => {
+  const req = {};
+  const res = { render: jest.fn() }
+  handlers.home(req, res)
+  expect(res.render.mock.calls[0][0]).toBe('home')
+})
