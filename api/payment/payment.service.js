@@ -39,25 +39,34 @@ async function createCustomer(user) {
   };
 
   const customerInfoCreated = {
-    token_card : lastTokenCard.tokenId,
+    token_card: lastTokenCard.tokenId,
     customer_id: (user?.billing?.customerId),
-}
+  }
 
-  if (!user?.billing?.customerId){
+  if (!user?.billing?.customerId) {
     return epayco.customers.create(customerInfo)
   }
 
   if (user?.billing?.customerId) {
     return epayco.customers.addNewToken(customerInfoCreated)
   }
-
 }
 
 async function makePayment(user, payment) {
-//   const lastTokenCard = user?.billing?.creditCards.slice(-1)[0];
+  const lastTokenCard = user?.billing?.creditCards.slice(-1)[0];
+  const tokenCardFront = get(payment, 'tokenId')
+
+  let tokenCard
+
+  if (tokenCardFront === '') {
+    tokenCard = lastTokenCard.tokenId
+  }
+  if (tokenCardFront !== '') {
+    tokenCard = tokenCardFront
+  }
 
   const paymentInfo = {
-    token_card: get(payment, 'tokenId'),
+    token_card: tokenCard,
     customer_id: get(user, 'billing.customerId'),
     doc_type: 'CC',
     doc_number: '10358519',

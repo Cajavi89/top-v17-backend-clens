@@ -47,7 +47,8 @@ async function getUserByEmailHandler(req, res) {
         .status(404)
         .json({ message: `User not found with email: ${email}` });
     }
-    return res.status(200).json(user);
+    const token = signToken(user.profile);
+    return res.status(200).json(token);
   } catch (error) {
     log.error(error);
     return res.status(400).json({ error: error.message });
