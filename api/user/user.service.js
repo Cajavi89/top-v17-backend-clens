@@ -44,12 +44,11 @@ async function updateUser(id, user) {
 }
 
 async function addBillingCards(user, card) {
-  const creditCards = user?.billing?.creditCards;
+  const creditCards = get(user, 'billing.creditCards', []);
 
   const customer = {
     billing: {
-      ...user.billing,
-      creditCards: creditCards.push(card)
+      creditCards: creditCards.concat(card)
     },
   };
 
