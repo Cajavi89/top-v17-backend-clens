@@ -10,6 +10,6 @@ const router = Router();
 const upload = multer({ dest: './temp' });
 
 router.post('/file', upload.single('file'), uploadSingleHandler);
-router.post('/files', upload.any(), uploadArrayHandler);
+router.post('/files', upload.array('file'), uploadArrayHandler);
 
 module.exports = router;
