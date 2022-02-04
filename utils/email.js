@@ -68,8 +68,6 @@ async function verifyEmailToResetPassword(user, token) {
 }
 
 async function pustulaEmail(data, files) {
-  console.log('files', files)
-  console.log('data', data)
   const photo = fs.readFileSync(files[0].path);
   const antecedentes = fs.readFileSync(files[1].path);
   const constancia = fs.readFileSync(files[2].path);
@@ -91,7 +89,7 @@ async function pustulaEmail(data, files) {
     text: 'Texto de confirmacion en formato texto',
     html: `Nombre Completo: ${data.fullname} <br>
            Direccion: ${data.direccion} <br>
-           Email: ${data.direccion} <br>
+           Email: ${data.email} <br>
            Celular: ${data.celular} <br>
            identificacion: ${data.identificacion}`,
     attachments: [
