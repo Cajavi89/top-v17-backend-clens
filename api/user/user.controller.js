@@ -8,7 +8,7 @@ const {
   getUserByRolePersonal,
 } = require('./user.service');
 
-const { verifyAccountEmail } = require('../../utils/email.js');
+const { verifyAccountEmail, pustulaEmail } = require('../../utils/email.js');
 const { verifyEmailToResetPassword } = require('../../utils/email.js');
 
 const { signToken } = require('../../auth/auth.service');
@@ -70,6 +70,19 @@ async function sendEmailToUserByEmailHandler(req, res) {
     await verifyEmailToResetPassword(user, token);
 
     return res.status(200).json(user);
+  } catch (error) {
+    log.error(error);
+    return res.status(400).json({ error: error.message });
+  }
+}
+
+async function sendPostulaEmailHandler(req, res) {
+  // eslint-disable-next-line no-unused-vars
+  const { files } = req;
+  const data = req.body
+  try {
+    await pustulaEmail(data, files);
+    return res.status(200).send(req.body);
   } catch (error) {
     log.error(error);
     return res.status(400).json({ error: error.message });
@@ -150,4 +163,5 @@ module.exports = {
   getUserByEmailHandler,
   sendEmailToUserByEmailHandler,
   getAllPersonalClensHandler,
+  sendPostulaEmailHandler
 };
