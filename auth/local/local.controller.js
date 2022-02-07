@@ -13,20 +13,20 @@ async function loginUserHandler(req, res) {
 
     if (!user) {
       return res.status(400).json({
-        message: 'Email not found',
+        message: 'Hubo un error, revisa si el email o la contraseña son correctos',
       });
     }
 
     if (!user.isVerified) {
       return res.status(400).json({
-        message: 'Your email is not validated, check your email messages or spam',
+        message: 'Su email no está validado, revise su bandeja de mensajes o spam',
       });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({
-        message: 'Invalid email or password',
+        message: 'Hubo un error, revisa si el email o la contraseña son correctos',
       });
     }
 
@@ -52,7 +52,7 @@ async function changePasswordHandler(req, res) {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({
-        message: 'Invalid password',
+        message: 'Hubo un error revise nuevamente la contraseña',
       });
     }
     const salt = await bcrypt.genSalt(10);
